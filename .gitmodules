@@ -1,0 +1,3 @@
+[submodule "Javange"]
+	path = Javange
+	url = https://github.com/willsherwood/Javange.git
