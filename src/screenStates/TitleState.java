@@ -1,11 +1,11 @@
 package screenStates;
 
-import javafx.util.Pair;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;
 import sherwood.screenStates.NullState;
 import sherwood.screenStates.ScreenState;
+import util.Pair;
 
 import java.awt.*;
 import java.util.*;
