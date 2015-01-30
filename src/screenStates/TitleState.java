@@ -1,5 +1,6 @@
 package screenStates;
 
+import physics.DemoPhysicsState;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;
@@ -27,7 +28,7 @@ public class TitleState extends ScreenState {
     public TitleState () {
         super();
         selections = new ArrayList<>();
-        selections.add(new Pair<>("Start", new NullState()));
+        selections.add(new Pair<>("Start", new DemoPhysicsState()));
         selections.add(new Pair<>("Controls", new NullState()));
         selections.add(new Pair<>("Options", new NullState()));
     }
