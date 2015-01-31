@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * A testing class to test the functionality of the AABB collision tester
  */
-public class CollisionTestState extends ScreenState {
+public class DemoQuadTreeCollisionDetectionState extends ScreenState {
 
     private int index;
     private List<DemoPhysicsObject> boxes;
@@ -32,7 +32,7 @@ public class CollisionTestState extends ScreenState {
      */
     private Map<Integer, physics.Vector> directions;
 
-    public CollisionTestState() {
+    public DemoQuadTreeCollisionDetectionState() {
         boxes = new ArrayList<>();
         directions = new HashMap<>();
 

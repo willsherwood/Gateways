@@ -1,6 +1,7 @@
 package screenStates;
 
-import physics.demo.CollisionTestState;
+import physics.demo.DemoPhysicsCollisionsState;
+import physics.demo.DemoQuadTreeCollisionDetectionState;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;
@@ -27,7 +28,8 @@ public class TitleState extends ScreenState {
     public TitleState() {
         super();
         selections = new ArrayList<>();
-        selections.add(new Pair<>("Start", new CollisionTestState()));
+        selections.add(new Pair<>("Start", new DemoQuadTreeCollisionDetectionState()));
+        selections.add(new Pair<>("Physics Collisions State demo", new DemoPhysicsCollisionsState()));
         selections.add(new Pair<>("Controls", new NullState()));
         selections.add(new Pair<>("Options", new NullState()));
     }
