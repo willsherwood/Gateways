@@ -1,6 +1,6 @@
 package screenStates;
 
-import physics.DemoPhysicsState;
+import physics.CollisionTestState;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;
@@ -9,7 +9,8 @@ import sherwood.screenStates.ScreenState;
 import util.Pair;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 public class TitleState extends ScreenState {
@@ -24,11 +25,10 @@ public class TitleState extends ScreenState {
             new Font("Garamond", Font.PLAIN, 40)
     };
 
-    @SuppressWarnings("unchecked")
     public TitleState () {
         super();
         selections = new ArrayList<>();
-        selections.add(new Pair<>("Start", new DemoPhysicsState()));
+        selections.add(new Pair<>("Start", new CollisionTestState()));
         selections.add(new Pair<>("Controls", new NullState()));
         selections.add(new Pair<>("Options", new NullState()));
     }

@@ -3,7 +3,8 @@ package physics;
 // Massive objects have mass.
 // Assume all massive objects have gravity
 public class MassiveObject extends MovingObject {
-    public static final double GRAVITY = 9.8 * Unit.MPS2;
+
+    public static final double GRAVITY = 9.8 * Units.MPS2;
 
     protected double mass;
 
