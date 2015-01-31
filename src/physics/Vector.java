@@ -47,7 +47,7 @@ public class Vector {
 		this.y += y;
 	}
 	
-	public static double fastInvSqrt(double x) {
+	private static double fastInvSqrt(double x) {
 	    double xhalf = 0.5 * x;
 	    long i = Double.doubleToLongBits(x);
 	    i = 0x5fe6ec85e7de30daL - (i >> 1);

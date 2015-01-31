@@ -3,18 +3,18 @@ package physics;
 /**
  * Axis-aligned bounding box.
  */
-public class AABB {
+public class AxisAlignedBoundingBox {
     public double x1, y1, x2, y2;
 
-    public AABB() {
+    public AxisAlignedBoundingBox() {
         this(0, 0, 0, 0);
     }
 
-    public AABB(double x1, double y1, double x2, double y2) {
+    public AxisAlignedBoundingBox(double x1, double y1, double x2, double y2) {
         set(x1, y1, x2, y2);
     }
 
-    public AABB(Vector topLeft, Vector botRight) {
+    public AxisAlignedBoundingBox(Vector topLeft, Vector botRight) {
         this(topLeft.x, topLeft.y, botRight.x, botRight.y);
     }
 
@@ -30,7 +30,7 @@ public class AABB {
     }
 
     // TODO: test this
-    public boolean intersects(AABB other) {
+    public boolean intersects(AxisAlignedBoundingBox other) {
         return !(
             other.x1 > this.x2
          || other.x2 < this.x1
