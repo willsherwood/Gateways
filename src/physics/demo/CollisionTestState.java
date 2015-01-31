@@ -94,7 +94,7 @@ public class CollisionTestState extends ScreenState {
     }
 
     private void addNewBox() {
-        boxes.add(new DemoPhysicsObject(Entropy.nextInt(10, 700), Entropy.nextInt(10, 700), Entropy.nextInt(1, 10), Entropy.nextInt(1, 10)));
+        boxes.add(new DemoPhysicsObject(Entropy.nextInt(10, GameScreen.WIDTH - 20), Entropy.nextInt(10, GameScreen.HEIGHT - 20), Entropy.nextInt(1, 10), Entropy.nextInt(1, 10)));
     }
 
     @Override

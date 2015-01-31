@@ -2,6 +2,7 @@ package map;
 
 import physics.AxisAlignedBoundingBox;
 import physics.PhysicsObject;
+import util.UnorderedPair;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -57,20 +58,17 @@ public class QuadTree {
         elements.clear();
     }
 
-    /**
-     * this should be called after building the quadtree
-     * it will call a.collide(b) for all a that collide with b
-     * whether a.collide(b) or b.collide(a) is called first is undefined
-     */
-    public void regressCollisions() {
+    public Set<UnorderedPair<PhysicsObject>> getCollidingPairs() {
+        Set<UnorderedPair<PhysicsObject>> out = new HashSet<>();
         PhysicsObject[] objects = elements.toArray(new PhysicsObject[0]);
         for (int i = 0; i < objects.length; i++)
-            for (int j = 0; j < objects.length; j++)
+            for (int j = i + 1; j < objects.length; j++)
                 if (i != j && objects[i].getAxisAlignedBoundingBox().intersects(objects[j].getAxisAlignedBoundingBox()))
-                    objects[i].collide(objects[j]);
-        if (children == null) return;
+                    out.add(new UnorderedPair<>(objects[i], objects[j]));
+        if (children == null) return out;
         for (QuadTree t : children)
-            t.regressCollisions();
+            out.addAll(t.getCollidingPairs());
+        return out;
     }
 
     /**
