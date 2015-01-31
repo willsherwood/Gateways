@@ -2,11 +2,13 @@ package physics.demo;
 
 import map.QuadTree;
 import physics.AxisAlignedBoundingBox;
+import physics.PhysicsObject;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.MixedControlKeyboardInput;
 import sherwood.screenStates.ScreenState;
 import util.Entropy;
+import util.UnorderedPair;
 
 import java.awt.*;
 import java.util.*;
@@ -90,11 +92,14 @@ public class CollisionTestState extends ScreenState {
         // calculate collisions
         lastQuadTree = new QuadTree(new AxisAlignedBoundingBox(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT));
         boxes.forEach(lastQuadTree::insert);
-        lastQuadTree.regressCollisions();
+        for (UnorderedPair<PhysicsObject> q : lastQuadTree.getCollidingPairs()) {
+            q.getA().collide(q.getB());
+        }
     }
 
     private void addNewBox() {
-        boxes.add(new DemoPhysicsObject(Entropy.nextInt(10, GameScreen.WIDTH - 20), Entropy.nextInt(10, GameScreen.HEIGHT - 20), Entropy.nextInt(1, 10), Entropy.nextInt(1, 10)));
+        for (int i = 0; i < 16; i++)
+            boxes.add(new DemoPhysicsObject(Entropy.nextInt(10, GameScreen.WIDTH - 20), Entropy.nextInt(10, GameScreen.HEIGHT - 20), Entropy.nextInt(1, 10), Entropy.nextInt(1, 10)));
     }
 
     @Override
