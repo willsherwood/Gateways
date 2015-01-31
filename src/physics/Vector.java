@@ -16,14 +16,16 @@ public class Vector {
 	}
 	
 	public static Vector fromPolar(double r, double theta) {
-		this.x = Math.cos(theta) * r;
-		this.y = Math.sin(theta) * r;
+        return new Vector(Math.cos(theta) * r, Math.sin(theta) * r);
 	}
 	
 	public static Vector fromPolarInverted(double r, double theta) {
-		this.x = Math.cos(theta) * r;
-		this.y = Math.sin(theta) * -r;
+        return new Vector(Math.cos(theta) * r, -Math.sin(theta) * r);
 	}
+
+    public Vector copy() {
+        return new Vector(x, y);
+    }
 	
 	public void set(double x, double y) {
 		this.x = x;

@@ -1,21 +1,20 @@
 package entities;
 
-import physics.movement.Gravity;
-import physics.movement.Velocity;
+import physics.MassiveObject;
+import physics.Unit;
 
-import java.util.BitSet;
-
-public class Player {
-
-    private Gravity gravity;
-    private Velocity velocity;
+public class Player extends MassiveObject {
+    // TODO: real values
+    public static final double PLAYER_WIDTH = 16;
+    public static final double PLAYER_HEIGHT = 24;
+    // average mass of a human
+    public static final double PLAYER_MASS = 74.7 * Unit.KILOGRAM;
 
     public Player() {
-        gravity = Gravity.defaultGravity();
-        velocity = new Velocity(0, 0, 7, 9);
+        super(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
     }
 
-    public void step(BitSet b) {
-
+    public Player(double x, double y) {
+        super(x, y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
     }
 }
