@@ -8,7 +8,7 @@ public class Player extends MassiveObject {
     public static final double PLAYER_WIDTH = 16;
     public static final double PLAYER_HEIGHT = 24;
     // average mass of a human
-    public static final double PLAYER_MASS = 74.7 * Units.KILOGRAM;
+    public static final double PLAYER_MASS = 74.7 * Units.KG;
 
     public Player() {
         super(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
