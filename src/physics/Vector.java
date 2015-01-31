@@ -5,7 +5,7 @@ package physics;
  */
 public class Vector {
 
-    double x, y;
+    protected double x, y;
 
     public Vector() {
         this(0, 0);
@@ -67,5 +67,13 @@ public class Vector {
         double fac = fastInvSqrt(x * x + y * y);
         // Math.sqrt() may be faster if optimized
         return new Vector(x * fac, y * fac);
+    }
+
+    public double x() {
+        return x;
+    }
+
+    public double y() {
+        return y;
     }
 }

@@ -51,4 +51,8 @@ public class PhysicsObject {
     public void collide(PhysicsObject object) {
 
     }
+
+    public void setPosition(Vector position) {
+        this.position = position;
+    }
 }
