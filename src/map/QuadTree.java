@@ -12,6 +12,8 @@ import java.util.Set;
 public class QuadTree {
 
     public static final int BUCKET_CAPACITY = 4;
+    public static final int MINIMUM_WIDTH = 8;
+
     protected final AxisAlignedBoundingBox box;
     protected QuadTree[] children;
     protected Set<PhysicsObject> elements;
@@ -34,13 +36,10 @@ public class QuadTree {
                 Q.insert(box);
             return true;
         }
-        if (elements.size() == BUCKET_CAPACITY) {
+        if (elements.size() == BUCKET_CAPACITY && this.box.width() >= MINIMUM_WIDTH) {
             split();
-            for (QuadTree Q : children) {
-                elements.forEach(Q::insert);
+            for (QuadTree Q : children)
                 Q.insert(box);
-            }
-            elements.clear();
             return true;
         }
         return elements.add(box);
@@ -52,6 +51,10 @@ public class QuadTree {
         children[1] = new QuadTree(new AxisAlignedBoundingBox(box.x1 + box.width() / 2, box.y1, box.x1 + box.width(), box.y1 + box.height() / 2));
         children[2] = new QuadTree(new AxisAlignedBoundingBox(box.x1, box.y1 + box.height() / 2, box.x1 + box.width() / 2, box.y1 + box.height()));
         children[3] = new QuadTree(new AxisAlignedBoundingBox(box.x1 + box.width() / 2, box.y1 + box.height() / 2, box.x1 + box.width(), box.y1 + box.height()));
+        for (QuadTree Q : children) {
+            elements.forEach(Q::insert);
+        }
+        elements.clear();
     }
 
     /**
