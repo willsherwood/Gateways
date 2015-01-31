@@ -67,6 +67,13 @@ public class PhysicsController {
             seen.add(A);
             seen.add(B);
         }
+        // move everything
+        for (PhysicsObject object : objects) {
+            if (object instanceof MovingObject) {
+                object.setPosition(object.position.plus(((MovingObject)
+                    object).getVelocity()));
+            }
+        }
     }
 
 
@@ -75,6 +82,7 @@ public class PhysicsController {
         a.collide(b);
         b.collide(a);
         // stub
+        System.out.println("Collision!");
     }
 
     // moving and moving
@@ -140,8 +148,13 @@ public class PhysicsController {
             }
             double entry = Math.max(xEntry, yEntry);
             double exit = Math.min(xExit, yExit);
-            if (entry > exit || xEntry < 0 && yEntry < 0 || xEntry > 1 || yEntry > 1)
+            if (entry > exit || xEntry < 0 && yEntry < 0 || xEntry > 1 || yEntry > 1) {
+                System.out.println("(entry > exit) = " + (entry > exit));
+                System.out.println("(xEntry < 0 && yEntry < 0) = " + (xEntry < 0 && yEntry < 0));
+                System.out.println("(xEntry > 1) = " + (xEntry > 1));
+                System.out.println("(yEntry > 1) = " + (yEntry > 1));
                 return null;
+            }
             if (xEntry > yEntry) {
                 if (xInvEntry < 0) {
                     col.normal.x = 1;

@@ -31,8 +31,10 @@ public class DemoPhysicsCollisionsState extends ScreenState {
 
     @Override
     public void draw(Graphics2D g) {
+        g.setColor(Color.GREEN);
         for (PhysicsObject p : movingObjects)
             g.drawRect((int) p.getAxisAlignedBoundingBox().x1, (int) p.getAxisAlignedBoundingBox().y1, (int) p.getWidth(), (int) p.getHeight());
+        g.setColor(Color.RED);
         for (PhysicsObject p : staticObjects)
             g.drawRect((int) p.getAxisAlignedBoundingBox().x1, (int) p.getAxisAlignedBoundingBox().y1, (int) p.getWidth(), (int) p.getHeight());
     }
