@@ -44,12 +44,12 @@ public class PhysicsObject {
         return size.y;
     }
 
-    // unsure on method signature
+    // I think player class should request an input or something
     public void step() {
     }
 
-    public void collide(PhysicsObject object) {
-
+    public void collide(PhysicsObject other) {
+        // do nothing
     }
 
     public void setPosition(Vector position) {
