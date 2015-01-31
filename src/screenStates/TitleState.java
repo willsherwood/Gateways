@@ -1,6 +1,6 @@
 package screenStates;
 
-import physics.CollisionTestState;
+import physics.demo.CollisionTestState;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;

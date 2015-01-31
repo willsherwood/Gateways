@@ -28,6 +28,12 @@ public class QuadTree {
     public boolean insert(PhysicsObject box) {
         if (!box.getAxisAlignedBoundingBox().intersects(this.box))
             return false;
+        //TODO: optimize
+        if (children != null) {
+            for (QuadTree Q : children)
+                Q.insert(box);
+            return true;
+        }
         if (elements.size() == BUCKET_CAPACITY) {
             split();
             for (QuadTree Q : children) {
@@ -45,7 +51,7 @@ public class QuadTree {
         children[0] = new QuadTree(new AxisAlignedBoundingBox(box.x1, box.y1, box.x1 + box.width() / 2, box.y1 + box.height() / 2));
         children[1] = new QuadTree(new AxisAlignedBoundingBox(box.x1 + box.width() / 2, box.y1, box.x1 + box.width(), box.y1 + box.height() / 2));
         children[2] = new QuadTree(new AxisAlignedBoundingBox(box.x1, box.y1 + box.height() / 2, box.x1 + box.width() / 2, box.y1 + box.height()));
-        children[1] = new QuadTree(new AxisAlignedBoundingBox(box.x1 + box.width() / 2, box.y1 + box.height() / 2, box.x1 + box.width(), box.y1 + box.height()));
+        children[3] = new QuadTree(new AxisAlignedBoundingBox(box.x1 + box.width() / 2, box.y1 + box.height() / 2, box.x1 + box.width(), box.y1 + box.height()));
     }
 
     /**
@@ -56,11 +62,25 @@ public class QuadTree {
     public void regressCollisions() {
         PhysicsObject[] objects = elements.toArray(new PhysicsObject[0]);
         for (int i = 0; i < objects.length; i++)
-            for (int j = i + 1; j < objects.length; j++)
-                if (objects[i].getAxisAlignedBoundingBox().intersects(objects[j].getAxisAlignedBoundingBox()))
+            for (int j = 0; j < objects.length; j++)
+                if (i != j && objects[i].getAxisAlignedBoundingBox().intersects(objects[j].getAxisAlignedBoundingBox()))
                     objects[i].collide(objects[j]);
         if (children == null) return;
         for (QuadTree t : children)
             t.regressCollisions();
+    }
+
+    /**
+     * @return all the bounding boxes
+     */
+    @Deprecated
+    public Set<AxisAlignedBoundingBox> getBoundingBoxes() {
+        Set<AxisAlignedBoundingBox> boxes = new HashSet<>();
+        boxes.add(box);
+        if (children == null)
+            return boxes;
+        for (QuadTree p : children)
+            boxes.addAll(p.getBoundingBoxes());
+        return boxes;
     }
 }
