@@ -16,16 +16,15 @@ import java.util.List;
 public class TitleState extends ScreenState {
 
     private static final String TITLE = "Gateways";
-    private int selected;
-    private List<Pair<String, ScreenState>> selections;
-    private int titleWidth = -1;
-
     private static Font[] fonts = {
             new Font("Garamond", Font.BOLD, 80),
             new Font("Garamond", Font.PLAIN, 40)
     };
+    private int selected;
+    private List<Pair<String, ScreenState>> selections;
+    private int titleWidth = -1;
 
-    public TitleState () {
+    public TitleState() {
         super();
         selections = new ArrayList<>();
         selections.add(new Pair<>("Start", new CollisionTestState()));
@@ -34,12 +33,12 @@ public class TitleState extends ScreenState {
     }
 
     @Override
-    public void draw (Graphics2D g) {
+    public void draw(Graphics2D g) {
         drawTitle(g);
         drawOptions(g);
     }
 
-    private void drawOptions (Graphics2D g) {
+    private void drawOptions(Graphics2D g) {
         Font f = g.getFont();
         g.setFont(fonts[1]);
         for (int i = 0; i < selections.size(); i++) {
@@ -52,7 +51,7 @@ public class TitleState extends ScreenState {
         g.setFont(f);
     }
 
-    private void drawTitle (Graphics2D g) {
+    private void drawTitle(Graphics2D g) {
         if (titleWidth == -1)
             titleWidth = g.getFontMetrics(fonts[0]).stringWidth(TITLE);
         Font previous = g.getFont();
@@ -62,7 +61,7 @@ public class TitleState extends ScreenState {
     }
 
     @Override
-    public void step (BitSet bitSet) {
+    public void step(BitSet bitSet) {
         if (bitSet.get(Control.getCondensed(Control.DOWN)))
             selected = (selected + 1) % selections.size();
         else if (bitSet.get(Control.getCondensed(Control.UP)))
@@ -74,7 +73,7 @@ public class TitleState extends ScreenState {
     }
 
     @Override
-    public void init () {
+    public void init() {
         super.init();
         GameScreen.get().requestKeyInputMechanism(new DiscreteControlKeyboardInput());
     }

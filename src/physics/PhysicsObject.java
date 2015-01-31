@@ -47,4 +47,8 @@ public class PhysicsObject {
     // unsure on method signature
     public void step() {
     }
+
+    public void collide(PhysicsObject object) {
+
+    }
 }

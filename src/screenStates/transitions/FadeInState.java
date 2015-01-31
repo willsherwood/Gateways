@@ -21,7 +21,7 @@ public class FadeInState extends ScreenState {
     @Override
     public void draw(Graphics2D g) {
         state.draw(g);
-        g.setColor(new Color(0, 0, 0, 255-(int) (255. / frames * frame)));
+        g.setColor(new Color(0, 0, 0, 255 - (int) (255. / frames * frame)));
         g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
         if (Main.DEBUG) {
             g.setColor(Color.WHITE);

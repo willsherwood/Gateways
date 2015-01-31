@@ -47,6 +47,14 @@ public class AxisAlignedBoundingBox {
         return new Vector(x2, y2);
     }
 
+    public double width() {
+        return x2 - x1;
+    }
+
+    public double height() {
+        return y2- y1;
+    }
+
     // TODO: intersect moving using time
     // velocity is relative to this (i.e. velocity of this AABB = 0)
     // public boolean intersects(AABB other, Vector velocity)
