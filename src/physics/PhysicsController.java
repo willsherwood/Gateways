@@ -35,10 +35,12 @@ public class PhysicsController {
             }
         });
         for (UnorderedPair<PhysicsObject> pair : collidingObjects) {
+            System.out.println(pair.getA() + " and " + pair.getB());
             Collision col = Collision.resolve(pair);
             if (col != null && col.valid)
                 collisions.add(col);
             else if (col != null) {
+                System.out.println("Invalid");
                 // invalid collision, try to separate
                 PhysicsObject A = col.objects.getA(), B = col.objects.getB();
                 if (!(A instanceof MovingObject)) {
@@ -107,7 +109,13 @@ public class PhysicsController {
         } else if (collision.normal.y > 0) {
             delta.y = bB.y2 - bA.y1;
         }
-        System.out.println("Separated by " + delta.magnitude());
+        if (collision.normal.x > 0 && A.velocity.x < 0
+            || collision.normal.x < 0 && A.velocity.x > 0)
+            A.velocity.x = 0;
+        if (collision.normal.y > 0 && A.velocity.y < 0
+            || collision.normal.y < 0 && A.velocity.y > 0)
+            A.velocity.y = 0;
+        System.out.println("Separated by " + delta);
         A.setPosition(A.getPosition().plus(delta));
     }
 
@@ -222,8 +230,11 @@ public class PhysicsController {
             col.distance = entry * vel.magnitude();
             if (entry > exit || xEntry > 1 || yEntry > 1) {
                 // no collision
+                System.out.println("Actually no collision");
                 return null;
             }
+            if (xEntry <= 0 && yEntry <= 0 && (xEntry == 0 || yEntry == 0))
+                return null;
             // this means they haven't already collided
             if (xEntry > 0 || yEntry > 0) {
                 col.valid = true;
@@ -237,7 +248,7 @@ public class PhysicsController {
                 } else {
                     xInvEntry = bB.x1 - bA.x2 + 1;
                 }
-                if (Math.abs(bB.y1 - bA.y2) > Math.abs(bB.y2 - bA.y1)) {
+                if (Math.abs(bB.y1 - bA.y2) < Math.abs(bB.y2 - bA.y1)) {
                     yInvEntry = bB.y2 - bA.y1 - 1;
                 } else {
                     yInvEntry = bB.y1 - bA.y2 + 1;
