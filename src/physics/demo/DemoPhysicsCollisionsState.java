@@ -1,7 +1,11 @@
 package physics.demo;
 
 import physics.*;
+import sherwood.gameScreen.GameScreen;
+import sherwood.inputs.keyboard.control.Control;
+import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;
 import sherwood.screenStates.ScreenState;
+import util.Entropy;
 
 import java.awt.*;
 import java.util.BitSet;
@@ -22,7 +26,9 @@ public class DemoPhysicsCollisionsState extends ScreenState {
         staticObjects.add(new StaticObject(100, 100, 10, 400));
 
         movingObjects.add(new MovingObject(500, 300, 40, 40));
-        movingObjects.forEach(a -> a.setVelocity(new Vector(-1.7, 0.4)));
+        movingObjects.add(new MovingObject(600, 300, 40, 40));
+
+        movingObjects.forEach(a -> a.setVelocity(new Vector(Entropy.next(-5, -1), Entropy.next(-2, 2))));
 
         staticObjects.forEach(physicsController::add);
         movingObjects.forEach(physicsController::add);
@@ -42,10 +48,16 @@ public class DemoPhysicsCollisionsState extends ScreenState {
     @Override
     public void step(BitSet keys) {
         physicsController.step();
+        if (keys.get(Control.START.ordinal())) {
+            MovingObject o = new MovingObject(500, 300, 40, 40);
+            o.setVelocity(new Vector(Entropy.next(-5, -1), Entropy.next(-2, 2)));
+            movingObjects.add(o);
+        }
     }
 
     @Override
     public void init() {
         super.init();
+        GameScreen.get().requestKeyInputMechanism(new DiscreteControlKeyboardInput());
     }
 }

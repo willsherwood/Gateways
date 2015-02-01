@@ -56,7 +56,7 @@ public class PhysicsController {
                 }
             }
         }
-        HashSet<PhysicsObject> seen = new HashSet<>();
+        HashSet<PhysicsObject> alreadyCollided = new HashSet<>();
         for (Collision collision : collisions) {
             PhysicsObject A = collision.objects.getA(),
                     B = collision.objects.getB();
@@ -65,32 +65,27 @@ public class PhysicsController {
                     // do nothing
                     continue;
                 } else {
-                    if (seen.contains(B))
+                    if (alreadyCollided.contains(B))
                         continue;
                     doCollisionMoving1((MovingObject) B, A, collision);
-                    seen.add(B);
+                    alreadyCollided.add(B);
                     continue;
                 }
             } else if (!(B instanceof MovingObject)) {
-                if (seen.contains(A))
+                if (alreadyCollided.contains(A))
                     continue;
                 doCollisionMoving1((MovingObject) A, B, collision);
-                seen.add(A);
+                alreadyCollided.add(A);
                 continue;
             }
-            if (seen.contains(A) || seen.contains(B))
+            if (alreadyCollided.contains(A) || alreadyCollided.contains(B))
                 continue;
             doCollisionMoving2((MovingObject) A, (MovingObject) B, collision);
-            seen.add(A);
-            seen.add(B);
+            alreadyCollided.add(A);
+            alreadyCollided.add(B);
         }
         // move everything
-        for (PhysicsObject object : objects) {
-            if (object instanceof MovingObject) {
-                object.setPosition(object.position.plus(((MovingObject)
-                    object).getVelocity()));
-            }
-        }
+        objects.stream().filter(a -> a instanceof MovingObject).forEach(b -> b.setPosition(b.position.plus(((MovingObject) b).getVelocity())));
     }
 
     private void separateMoving2(MovingObject A, MovingObject B, Collision collision) {
@@ -99,7 +94,7 @@ public class PhysicsController {
 
     private void separateMoving1(MovingObject A, PhysicsObject B, Collision collision) {
         AxisAlignedBoundingBox bA = A.getAxisAlignedBoundingBox(),
-                               bB = B.getAxisAlignedBoundingBox();
+                bB = B.getAxisAlignedBoundingBox();
         System.out.println(collision.normal);
         Vector delta = new Vector();
         if (collision.normal.x < 0) {
@@ -131,9 +126,21 @@ public class PhysicsController {
     // moving and moving
     private void doCollisionMoving2(MovingObject a, MovingObject b,
                                     Collision collision) {
+
         a.collide(b);
         b.collide(a);
-        // stub
+
+        // move to collision
+        a.setPosition(a.getPosition().plus(a.velocity.times(collision.time)));
+        b.setPosition(b.getPosition().plus(b.velocity.times(collision.time)));
+
+        if (collision.normal.x == 0) {
+            a.setVelocity(new Vector(a.getVelocity().x, 0));
+            a.setVelocity(new Vector(b.getVelocity().x, 0));
+        } else {
+            a.setVelocity(new Vector(0, a.getVelocity().y));
+            b.setVelocity(new Vector(0, b.getVelocity().y));
+        }
     }
 
     public static class Collision {
