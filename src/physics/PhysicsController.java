@@ -134,12 +134,18 @@ public class PhysicsController {
         a.setPosition(a.getPosition().plus(a.velocity.times(collision.time)));
         b.setPosition(b.getPosition().plus(b.velocity.times(collision.time)));
 
-        if (collision.normal.x == 0) {
-            a.setVelocity(new Vector(a.getVelocity().x, 0));
-            a.setVelocity(new Vector(b.getVelocity().x, 0));
-        } else {
-            a.setVelocity(new Vector(0, a.getVelocity().y));
-            b.setVelocity(new Vector(0, b.getVelocity().y));
+        if (a.velocity.dot(b.velocity) < 0)
+            if (collision.normal.x == 0) {
+                a.setVelocity(new Vector(a.getVelocity().x, 0));
+                b.setVelocity(new Vector(b.getVelocity().x, 0));
+            } else {
+                a.setVelocity(new Vector(0, a.getVelocity().y));
+                b.setVelocity(new Vector(0, b.getVelocity().y));
+            }
+        else {
+            Vector oldA = a.velocity;
+            a.setVelocity(b.velocity);
+            b.setVelocity(oldA);
         }
     }
 
@@ -226,7 +232,7 @@ public class PhysicsController {
                 // find the closest distance
                 // also, fudge the numbers so that we can choose which
                 // side to put the normal on
-                if (Math.abs(bB.x1 - bA.x2) > Math.abs(bB.x2 - bA.x1)) {
+                if (Math.abs(bB.x1 - bA.x2) < Math.abs(bB.x2 - bA.x1)) {
                     xInvEntry = bB.x2 - bA.x1 - 1;
                 } else {
                     xInvEntry = bB.x1 - bA.x2 + 1;

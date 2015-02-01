@@ -25,10 +25,12 @@ public class DemoPhysicsCollisionsState extends ScreenState {
 
         staticObjects.add(new StaticObject(100, 100, 10, 400));
 
-        movingObjects.add(new MovingObject(500, 300, 40, 40));
-        movingObjects.add(new MovingObject(600, 300, 40, 40));
-
-        movingObjects.forEach(a -> a.setVelocity(new Vector(Entropy.next(-5, -1), Entropy.next(-2, 2))));
+        MovingObject a = new MovingObject(300, 300, 64, 64);
+        MovingObject b = new MovingObject(400, 200, 64, 64);
+        a.setVelocity(new Vector(-1, 0.2));
+        b.setVelocity(new Vector(-2, 1.4));
+        movingObjects.add(a);
+        movingObjects.add(b);
 
         staticObjects.forEach(physicsController::add);
         movingObjects.forEach(physicsController::add);
