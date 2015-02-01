@@ -32,10 +32,10 @@ public class AxisAlignedBoundingBox {
     // TODO: test this
     public boolean intersects(AxisAlignedBoundingBox other) {
         return !(
-            other.x1 > this.x2
-         || other.x2 < this.x1
-         || other.y1 > this.y2
-         || other.y2 < this.y1
+            other.x1 >= this.x2
+         || other.x2 <= this.x1
+         || other.y1 >= this.y2
+         || other.y2 <= this.y1
             );
     }
 
@@ -58,4 +58,17 @@ public class AxisAlignedBoundingBox {
     // TODO: intersect moving using time
     // velocity is relative to this (i.e. velocity of this AABB = 0)
     // public boolean intersects(AABB other, Vector velocity)
+    public AxisAlignedBoundingBox expand(Vector with) {
+        AxisAlignedBoundingBox ret = new AxisAlignedBoundingBox(
+            x1, y1, x2, y2);
+        if (with.x < 0)
+            ret.x1 += with.x;
+        else
+            ret.x2 += with.x;
+        if (with.y < 0)
+            ret.y1 += with.y;
+        else
+            ret.y2 += with.y;
+        return ret;
+    }
 }
