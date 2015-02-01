@@ -45,6 +45,11 @@ public class Vector {
         return new Vector(x * fac, y * fac);
     }
 
+    // other should be normalized for this to work correctly
+    public Vector projectOnto(Vector other) {
+        return new Vector(x * other.x, y * other.y);
+    }
+
     public Vector over(double fac) {
         return new Vector(x / fac, y / fac);
     }
@@ -75,5 +80,10 @@ public class Vector {
 
     public double y() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
 }

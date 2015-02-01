@@ -36,6 +36,10 @@ public class PhysicsObject {
         return new AxisAlignedBoundingBox(position, position.plus(size));
     }
 
+    public AxisAlignedBoundingBox getCollisionBounds() {
+        return getAxisAlignedBoundingBox();
+    }
+
     public double getWidth() {
         return size.x;
     }

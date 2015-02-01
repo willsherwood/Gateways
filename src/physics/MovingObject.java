@@ -25,4 +25,9 @@ public class MovingObject extends PhysicsObject {
         super(width, height);
         velocity = new Vector();
     }
+
+    @Override
+    public AxisAlignedBoundingBox getCollisionBounds() {
+        return getAxisAlignedBoundingBox().expand(velocity);
+    }
 }

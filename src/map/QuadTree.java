@@ -29,7 +29,7 @@ public class QuadTree {
      * @return whether or not the box was added
      */
     public boolean insert(PhysicsObject box) {
-        if (!box.getAxisAlignedBoundingBox().intersects(this.box))
+        if (!box.getCollisionBounds().intersects(this.box))
             return false;
         //TODO: optimize
         if (children != null) {
@@ -63,7 +63,7 @@ public class QuadTree {
         PhysicsObject[] objects = elements.toArray(new PhysicsObject[0]);
         for (int i = 0; i < objects.length; i++)
             for (int j = i + 1; j < objects.length; j++)
-                if (i != j && objects[i].getAxisAlignedBoundingBox().intersects(objects[j].getAxisAlignedBoundingBox()))
+                if (i != j && objects[i].getCollisionBounds().intersects(objects[j].getCollisionBounds()))
                     out.add(new UnorderedPair<>(objects[i], objects[j]));
         if (children == null) return out;
         for (QuadTree t : children)
