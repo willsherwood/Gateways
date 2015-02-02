@@ -110,10 +110,10 @@ public class PhysicsController {
             delta.y = bB.y2 - bA.y1;
         }
         if (collision.normal.x > 0 && A.velocity.x < 0
-            || collision.normal.x < 0 && A.velocity.x > 0)
+                || collision.normal.x < 0 && A.velocity.x > 0)
             A.velocity.x = 0;
         if (collision.normal.y > 0 && A.velocity.y < 0
-            || collision.normal.y < 0 && A.velocity.y > 0)
+                || collision.normal.y < 0 && A.velocity.y > 0)
             A.velocity.y = 0;
         System.out.println("Separated by " + delta);
         A.setPosition(A.getPosition().plus(delta));
@@ -233,10 +233,7 @@ public class PhysicsController {
                 System.out.println("Actually no collision");
                 return null;
             }
-            if (xEntry <= 0 && yEntry <= 0 && (xEntry == 0 || yEntry == 0))
-                return null;
-            // this means they haven't already collided
-            if (xEntry > 0 || yEntry > 0) {
+            if (xEntry >= 0 || yEntry >= 0) {
                 col.valid = true;
             }
             if (!col.valid) {
