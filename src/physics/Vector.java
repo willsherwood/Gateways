@@ -46,7 +46,7 @@ public class Vector {
     }
 
     // other should be normalized for this to work correctly
-    public Vector projectOnto(Vector other) {
+    public Vector multiply(Vector other) {
         return new Vector(x * other.x, y * other.y);
     }
 

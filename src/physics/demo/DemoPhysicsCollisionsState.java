@@ -1,6 +1,7 @@
 package physics.demo;
 
 import physics.*;
+import sherwood.gameScreen.FPSUpdateAlgorithm;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
 import sherwood.inputs.keyboard.control.discrete.DiscreteControlKeyboardInput;
@@ -25,12 +26,11 @@ public class DemoPhysicsCollisionsState extends ScreenState {
 
         staticObjects.add(new StaticObject(100, 100, 10, 400));
 
-        MovingObject a = new MovingObject(300, 300, 64, 64);
-        MovingObject b = new MovingObject(400, 200, 64, 64);
-        a.setVelocity(new Vector(-1, 0.2));
-        b.setVelocity(new Vector(-2, 1.4));
-        movingObjects.add(a);
-        movingObjects.add(b);
+        for (int i=0; i<3; i++) {
+            MovingObject o = new MovingObject(400+i*100, 300, 50, 50);
+            o.setVelocity(new Vector(-20.4, 0.2));
+            movingObjects.add(o);
+        }
 
         staticObjects.forEach(physicsController::add);
         movingObjects.forEach(physicsController::add);
@@ -51,15 +51,23 @@ public class DemoPhysicsCollisionsState extends ScreenState {
     public void step(BitSet keys) {
         physicsController.step();
         if (keys.get(Control.START.ordinal())) {
-            MovingObject o = new MovingObject(500, 300, 40, 40);
-            o.setVelocity(new Vector(Entropy.next(-5, -1), Entropy.next(-2, 2)));
-            movingObjects.add(o);
+            insertNewObject();
         }
+    }
+
+    public void insertNewObject() {
+        MovingObject o = new MovingObject(Entropy.next(0, GameScreen.WIDTH-50),
+                                          Entropy.next(0, GameScreen.HEIGHT-50),
+                                          Entropy.next(5, 15), Entropy.next(5, 15));
+        o.setVelocity(new Vector(Entropy.next(-3, 3), Entropy.next(-3, 3)));
+        movingObjects.add(o);
+        physicsController.add(o);
     }
 
     @Override
     public void init() {
         super.init();
+        GameScreen.get().requestUpdateAlgorithm(new FPSUpdateAlgorithm(60));
         GameScreen.get().requestKeyInputMechanism(new DiscreteControlKeyboardInput());
     }
 }

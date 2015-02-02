@@ -11,6 +11,6 @@ public class Main {
     public static final boolean DEBUG = true;
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(()->GameScreen.start(new FadeInState(new TitleState(), 255), "Gateways"));
+        SwingUtilities.invokeLater(()->GameScreen.start(new FadeInState(new TitleState(), 30), "Gateways"));
     }
 }
