@@ -30,6 +30,7 @@ public class TitleState extends ScreenState {
         selections = new ArrayList<>();
         selections.add(new Pair<>("Start", new DemoQuadTreeCollisionDetectionState()));
         selections.add(new Pair<>("Physics Collisions State demo", new DemoPhysicsCollisionsState()));
+        selections.add(new Pair<>("Controller Setup", new ControllerSetupState()));
         selections.add(new Pair<>("Controls", new NullState()));
         selections.add(new Pair<>("Options", new NullState()));
     }
