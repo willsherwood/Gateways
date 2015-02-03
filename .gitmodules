@@ -1,3 +1,6 @@
 [submodule "Javange"]
 	path = Javange
 	url = https://github.com/willsherwood/Javange.git
+[submodule "jinput"]
+	path = jinput
+	url = https://github.com/jinput/jinput
