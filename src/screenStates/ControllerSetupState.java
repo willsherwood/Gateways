@@ -16,8 +16,6 @@ public class ControllerSetupState extends ScreenState {
     ControllerEnvironment environment;
     Controller[] controllers;
     int currentController;
-    float xAxis, yAxis;
-    TreeMap<String, Boolean> buttons;
 
     @Override
     public void init() {
@@ -47,11 +45,28 @@ public class ControllerSetupState extends ScreenState {
     @Override
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.drawOval(100, 100, 300, 300);
-        g.setColor(Color.RED);
-        g.drawOval((int)(200 + 75 * xAxis), (int)(200 + 75 * yAxis), 100, 100);
-        g.setColor(Color.WHITE);
-        g.drawString("Current controller: " + controllers[currentController].getName(), 100, 50);
+        g.drawString("Current controller: " + controllers[currentController].getName(), 50, GameScreen.HEIGHT - 10);
+        int cx = 10;
+        int cy = 10;
+        for (Component component : controllers[currentController].getComponents()) {
+            g.drawString(component.getName(), cx, cy);
+            // TODO: Hat switch POV
+            if (component.isAnalog()) {
+                g.drawRect(cx, cy + 5, 100, 20);
+                g.drawRect(cx + (int)(component.getPollData() * 50 + 50) - 15, cy, 30, 30);
+            } else {
+                if (component.getPollData() < 0.5) {
+                    g.drawOval(cx + 35, cy, 30, 30);
+                } else {
+                    g.fillOval(cx + 35, cy, 30, 30);
+                }
+            }
+            cy += 40;
+            if (cy > 400) {
+                cy = 10;
+                cx += 120;
+            }
+        }
     }
 
     @Override
@@ -70,12 +85,5 @@ public class ControllerSetupState extends ScreenState {
                 currentController = 0;
         }
         controllers[currentController].poll();
-        for (Component component : controllers[currentController].getComponents()) {
-            if (component.getIdentifier().equals(Component.Identifier.Axis.X)) {
-                xAxis = component.getPollData();
-            } else if (component.getIdentifier().equals(Component.Identifier.Axis.Y)) {
-                yAxis = component.getPollData();
-            }
-        }
     }
 }
