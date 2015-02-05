@@ -4,8 +4,10 @@ import physics.AxisAlignedBoundingBox;
 import physics.PhysicsObject;
 import util.UnorderedPair;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A data structure representing a quadtree of physics objects
@@ -58,7 +60,23 @@ public class QuadTree {
         elements.clear();
     }
 
-    public Set<UnorderedPair<PhysicsObject>> getCollidingPairs() {
+    /**
+     * @return all objects in this quadtree colliding with the parameter
+     */
+    public Set<UnorderedPair<PhysicsObject>> getCollidingPairs(PhysicsObject obj) {
+        if (!obj.getAxisAlignedBoundingBox().intersects(box))
+            return Collections.EMPTY_SET;
+        Set<UnorderedPair<PhysicsObject>> out = new HashSet<>();
+        if (children == null) {
+            elements.stream().filter(a -> obj.getCollisionBounds().intersects(a.getCollisionBounds())).forEach(b -> out.add(new UnorderedPair<>(obj, b)));
+            return out;
+        }
+        for (QuadTree child : children)
+            out.addAll(child.getCollidingPairs(obj));
+        return out;
+    }
+
+    public Set<UnorderedPair<PhysicsObject>> getAllCollidingPairs() {
         Set<UnorderedPair<PhysicsObject>> out = new HashSet<>();
         PhysicsObject[] objects = elements.toArray(new PhysicsObject[0]);
         for (int i = 0; i < objects.length; i++)
@@ -67,7 +85,7 @@ public class QuadTree {
                     out.add(new UnorderedPair<>(objects[i], objects[j]));
         if (children == null) return out;
         for (QuadTree t : children)
-            out.addAll(t.getCollidingPairs());
+            out.addAll(t.getAllCollidingPairs());
         return out;
     }
 
