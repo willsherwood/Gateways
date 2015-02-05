@@ -4,6 +4,7 @@ import physics.AxisAlignedBoundingBox;
 import physics.PhysicsObject;
 import util.UnorderedPair;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,17 +65,14 @@ public class QuadTree {
      */
     public Set<UnorderedPair<PhysicsObject>> getCollidingPairs(PhysicsObject obj) {
         if (!obj.getAxisAlignedBoundingBox().intersects(box))
-            return null;
+            return Collections.EMPTY_SET;
         Set<UnorderedPair<PhysicsObject>> out = new HashSet<>();
         if (children == null) {
-            elements.stream().filter(a->obj.getCollisionBounds().intersects(a.getCollisionBounds())).forEach(b->out.add(new UnorderedPair<>(obj, b)));
+            elements.stream().filter(a -> obj.getCollisionBounds().intersects(a.getCollisionBounds())).forEach(b -> out.add(new UnorderedPair<>(obj, b)));
             return out;
         }
-        for (QuadTree child : children) {
-            Set<UnorderedPair<PhysicsObject>> objects = child.getCollidingPairs(obj);
-            if (objects != null)
-                out.addAll(objects);
-        }
+        for (QuadTree child : children)
+            out.addAll(child.getCollidingPairs(obj));
         return out;
     }
 
