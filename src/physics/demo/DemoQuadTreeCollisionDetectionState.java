@@ -92,7 +92,7 @@ public class DemoQuadTreeCollisionDetectionState extends ScreenState {
         // calculate collisions
         lastQuadTree = new QuadTree(new AxisAlignedBoundingBox(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT));
         boxes.forEach(lastQuadTree::insert);
-        for (UnorderedPair<PhysicsObject> q : lastQuadTree.getCollidingPairs()) {
+        for (UnorderedPair<PhysicsObject> q : lastQuadTree.getAllCollidingPairs()) {
             q.getA().collide(q.getB());
         }
     }

@@ -26,7 +26,7 @@ public class PhysicsController {
         QuadTree quadTree = new QuadTree(new AxisAlignedBoundingBox(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT));
         objects.forEach(quadTree::insert);
         // not guaranteed, just broad-phase
-        Set<UnorderedPair<PhysicsObject>> collidingObjects = quadTree.getCollidingPairs();
+        Set<UnorderedPair<PhysicsObject>> collidingObjects = quadTree.getAllCollidingPairs();
         quadTree = null; // this is going to be memory-intensive
         // sort collisions by distance
         TreeSet<Collision> collisions = new TreeSet<>(new Comparator<Collision>() {
