@@ -33,10 +33,10 @@ public class DemoPhysicsObject extends MovingObject {
     public void step() {
         super.step();
         position = position.plus(velocity);
-        if (position.x() + size.x() >= GameScreen.WIDTH || position.x() < 0)
-            velocity = new Vector(-velocity.x(), velocity.y());
-        if (position.y() + size.y() >= GameScreen.HEIGHT || position.y() < 0)
-            velocity = new Vector(velocity.x(), -velocity.y());
+        if (position.x + size.x >= GameScreen.WIDTH || position.x < 0)
+            velocity = new Vector(-velocity.x, velocity.y);
+        if (position.y + size.y >= GameScreen.HEIGHT || position.y < 0)
+            velocity = new Vector(velocity.x, -velocity.y);
     }
 
     @Override

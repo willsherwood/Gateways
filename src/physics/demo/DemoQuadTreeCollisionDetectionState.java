@@ -63,7 +63,7 @@ public class DemoQuadTreeCollisionDetectionState extends ScreenState {
                 g.setColor(Color.RED);
             else
                 g.setColor(Color.LIGHT_GRAY);
-            g.fillRect((int) box.getPosition().x(), (int) box.getPosition().y(), (int) box.getWidth(), (int) box.getHeight());
+            g.fillRect((int) box.getPosition().x, (int) box.getPosition().y, (int) box.getWidth(), (int) box.getHeight());
         }
         if (drawGridLines) {
             g.setColor(Color.GREEN);
