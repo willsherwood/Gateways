@@ -59,4 +59,8 @@ public class PhysicsObject {
     public void setPosition(Vector position) {
         this.position = position;
     }
+
+    public void addPosition(Vector delta) {
+        this.position = this.position.plus(delta);
+    }
 }
