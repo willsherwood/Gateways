@@ -1,5 +1,6 @@
 package screenStates;
 
+import controller.AxisMap;
 import net.java.games.input.Component;
 import sherwood.gameScreen.GameScreen;
 import sherwood.inputs.keyboard.control.Control;
@@ -116,5 +117,6 @@ public class ControllerSetupState extends ScreenState {
                 currentController = 0;
         }
         controllers[currentController].poll();
+        AxisMap.controller = controllers[currentController];
     }
 }
